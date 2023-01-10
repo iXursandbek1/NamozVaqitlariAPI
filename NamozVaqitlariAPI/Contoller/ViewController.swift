@@ -176,6 +176,8 @@ class ViewController: UIViewController {
     //MARK: - fetchData -
     func fetchData(region: String) {
         
+        activeIndicator.isHidden = false
+        activeIndicator.startAnimating()
         // url
         let regionL = region.lowercased()
 
