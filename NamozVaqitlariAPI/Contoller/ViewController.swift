@@ -37,6 +37,8 @@ class ViewController: UIViewController {
     var dataModel: DataModel?
     
     var locations = ["Andijon", "Buxoro", "Jizzax", "Xorazm", "Namangan", "Navoiy", "Qashqadaryo", "Samarqand", "Sirdaryo", "Surxondaryo", "Toshkent" ]
+    
+    let activeIndicator = UIActivityIndicatorView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -159,6 +161,16 @@ class ViewController: UIViewController {
             make.centerX.equalToSuperview()
             make.width.equalTo(view.snp.width)
         }
+        
+        view.addSubview(activeIndicator)
+        activeIndicator.startAnimating()
+        activeIndicator.isHidden = false
+        activeIndicator.style = .large
+        activeIndicator.snp.makeConstraints { make in
+            make.centerY.centerX.equalToSuperview()
+            make.height.equalTo(view.snp.height).multipliedBy(0.2)
+            make.width.equalTo(view.snp.width).multipliedBy(0.2)
+        }
     }
     
     //MARK: - fetchData -
@@ -208,6 +220,9 @@ class ViewController: UIViewController {
                     return
                 }
                 
+                self.activeIndicator.stopAnimating()
+                self.activeIndicator.isHidden = true
+                
                 self.bomdodT.text = "⏰   \(finalData.result.tong_saharlik)"
                 self.quyoshT.text = "⏰   \(finalData.result.quyosh)"
                 self.peshinT.text = "⏰   \(finalData.result.peshin)"
@@ -217,21 +232,6 @@ class ViewController: UIViewController {
             }
         }
         dataTask.resume()
-    }
-    
-    func putTheData() {
-        
-        guard let finalData = self.dataModel else {
-            print("Error is here")
-            return
-        }
-        
-        bomdodT.text = "⏰   \(finalData.result.tong_saharlik)"
-        quyoshT.text = "⏰   \(finalData.result.quyosh)"
-        peshinT.text = "⏰   \(finalData.result.peshin)"
-        asirT.text = "⏰   \(finalData.result.asr)"
-        shomT.text = "⏰   \(finalData.result.shom_iftor)"
-        xuftonT.text = "⏰   \(finalData.result.xufton)"
     }
 }
 
